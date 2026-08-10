@@ -60,10 +60,16 @@ namespace BlockBrawl.Grid
                 chosenCells.Add(new Vector2Int(x, y));
             }
 
-            foreach (Vector2Int cell in chosenCells)
+            PlaceShapeBlocks(chosenCells, 0, 0);
+        }
+
+        public void PlaceShapeBlocks(IEnumerable<Vector2Int> relativeCells, int originX, int originY)
+        {
+            board.PlaceCells(relativeCells, originX, originY);
+
+            foreach (Vector2Int cell in relativeCells)
             {
-                board.SetOccupied(cell.x, cell.y, true);
-                Vector3 worldPosition = GridToWorldPosition(cell.x, cell.y);
+                Vector3 worldPosition = GridToWorldPosition(originX + cell.x, originY + cell.y);
                 Instantiate(blockCellPrefab, worldPosition, Quaternion.identity, transform);
             }
         }
@@ -73,6 +79,13 @@ namespace BlockBrawl.Grid
             float worldX = (x - Board.Width / 2f + 0.5f) * cellSize;
             float worldY = (y - Board.Height / 2f + 0.5f) * cellSize;
             return new Vector3(worldX, worldY, 0f);
+        }
+
+        public Vector2Int WorldToGridPosition(Vector3 worldPosition)
+        {
+            int x = Mathf.RoundToInt(worldPosition.x / cellSize + Board.Width / 2f - 0.5f);
+            int y = Mathf.RoundToInt(worldPosition.y / cellSize + Board.Height / 2f - 0.5f);
+            return new Vector2Int(x, y);
         }
     }
 }

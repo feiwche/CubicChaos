@@ -1,9 +1,11 @@
 using UnityEngine;
+using BlockBrawl.Grid;
 
 namespace BlockBrawl.Pieces
 {
     public class PieceTray : MonoBehaviour
     {
+        [SerializeField] private BoardView boardView;
         [SerializeField] private PieceShape[] availableShapes;
         [SerializeField] private GameObject piecePrefab;
         [SerializeField] private int slotCount = 3;
@@ -30,8 +32,12 @@ namespace BlockBrawl.Pieces
             Vector3 slotPosition = GetSlotPosition(slotIndex);
             GameObject pieceObject = Instantiate(piecePrefab, slotPosition, Quaternion.identity, transform);
             pieceObject.transform.localScale = Vector3.one * traySlotScale;
+
             PieceView pieceView = pieceObject.GetComponent<PieceView>();
             pieceView.Initialize(shape);
+
+            PieceDragHandler dragHandler = pieceObject.GetComponent<PieceDragHandler>();
+            dragHandler.Initialize(boardView);
         }
 
         private Vector3 GetSlotPosition(int slotIndex)

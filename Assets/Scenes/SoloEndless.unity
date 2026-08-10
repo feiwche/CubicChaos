@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8dd4893f2cc3344fb0dd237ec438c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boardView: {fileID: 808134902}
   availableShapes:
   - {fileID: 11400000, guid: 0652f44c27fc0c36b7b2c2cba012b416, type: 2}
   - {fileID: 11400000, guid: bf20a0ca3eadb54798538464989e77ec, type: 2}

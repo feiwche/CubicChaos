@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace BlockBrawl.Grid
 {
     public class Board
@@ -20,6 +23,30 @@ namespace BlockBrawl.Grid
         public void SetOccupied(int x, int y, bool value)
         {
             occupied[x, y] = value;
+        }
+
+        public bool CanPlaceCells(IEnumerable<Vector2Int> relativeCells, int originX, int originY)
+        {
+            foreach (Vector2Int cell in relativeCells)
+            {
+                int x = originX + cell.x;
+                int y = originY + cell.y;
+
+                if (!IsInsideBoard(x, y) || IsCellOccupied(x, y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void PlaceCells(IEnumerable<Vector2Int> relativeCells, int originX, int originY)
+        {
+            foreach (Vector2Int cell in relativeCells)
+            {
+                SetOccupied(originX + cell.x, originY + cell.y, true);
+            }
         }
     }
 }
