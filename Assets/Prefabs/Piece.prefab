@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   cellPrefab: {fileID: 100100001, guid: 6ed064c514e7c07a3d92101c47f438fe, type: 3}
-  cellSize: 0.4
+  cellSize: 1

@@ -9,6 +9,7 @@ namespace BlockBrawl.Pieces
         [SerializeField] private int slotCount = 3;
         [SerializeField] private float slotSpacing = 2.5f;
         [SerializeField] private float traySlotY = -5f;
+        [SerializeField] private float traySlotScale = 0.4f;
 
         private void Start()
         {
@@ -28,6 +29,7 @@ namespace BlockBrawl.Pieces
             PieceShape shape = availableShapes[Random.Range(0, availableShapes.Length)];
             Vector3 slotPosition = GetSlotPosition(slotIndex);
             GameObject pieceObject = Instantiate(piecePrefab, slotPosition, Quaternion.identity, transform);
+            pieceObject.transform.localScale = Vector3.one * traySlotScale;
             PieceView pieceView = pieceObject.GetComponent<PieceView>();
             pieceView.Initialize(shape);
         }

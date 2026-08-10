@@ -9,6 +9,8 @@ namespace BlockBrawl.Grid
 
         private Board board;
 
+        public Board Board => board;
+
         private void Awake()
         {
             board = new Board();

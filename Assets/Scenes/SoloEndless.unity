@@ -443,6 +443,7 @@ MonoBehaviour:
   slotCount: 3
   slotSpacing: 2.5
   traySlotY: -5
+  traySlotScale: 0.4
 --- !u!4 &900000002
 Transform:
   m_ObjectHideFlags: 0
