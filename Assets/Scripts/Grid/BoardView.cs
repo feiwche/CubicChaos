@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using BlockBrawl.Core;
 
 namespace BlockBrawl.Grid
 {
@@ -7,6 +8,7 @@ namespace BlockBrawl.Grid
     {
         [SerializeField] private GameObject cellPrefab;
         [SerializeField] private GameObject blockCellPrefab;
+        [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private float cellSize = 1f;
 
         [SerializeField] [Range(0f, 1f)] private float prefilledChance = 0.3f;
@@ -15,6 +17,8 @@ namespace BlockBrawl.Grid
         [SerializeField] [Range(0f, 1f)] private float denseTierChance = 0.15f;
         [SerializeField] private int denseMinCells = 10;
         [SerializeField] private int denseMaxCells = 13;
+
+        private readonly GameObject[,] blockVisuals = new GameObject[Board.Width, Board.Height];
 
         private Board board;
 
@@ -69,9 +73,61 @@ namespace BlockBrawl.Grid
 
             foreach (Vector2Int cell in relativeCells)
             {
-                Vector3 worldPosition = GridToWorldPosition(originX + cell.x, originY + cell.y);
-                Instantiate(blockCellPrefab, worldPosition, Quaternion.identity, transform);
+                int x = originX + cell.x;
+                int y = originY + cell.y;
+                Vector3 worldPosition = GridToWorldPosition(x, y);
+                blockVisuals[x, y] = Instantiate(blockCellPrefab, worldPosition, Quaternion.identity, transform);
             }
+
+            ClearFullLines();
+        }
+
+        private void ClearFullLines()
+        {
+            List<int> fullRows = board.GetFullRows();
+            List<int> fullColumns = board.GetFullColumns();
+
+            int clearedCellCount = 0;
+
+            foreach (int y in fullRows)
+            {
+                for (int x = 0; x < Board.Width; x++)
+                {
+                    if (ClearCellVisual(x, y))
+                    {
+                        clearedCellCount++;
+                    }
+                }
+            }
+
+            foreach (int x in fullColumns)
+            {
+                for (int y = 0; y < Board.Height; y++)
+                {
+                    if (ClearCellVisual(x, y))
+                    {
+                        clearedCellCount++;
+                    }
+                }
+            }
+
+            if (clearedCellCount > 0 && scoreManager != null)
+            {
+                scoreManager.AddClearedCells(clearedCellCount);
+            }
+        }
+
+        private bool ClearCellVisual(int x, int y)
+        {
+            if (blockVisuals[x, y] == null)
+            {
+                return false;
+            }
+
+            Destroy(blockVisuals[x, y]);
+            blockVisuals[x, y] = null;
+            board.SetOccupied(x, y, false);
+            return true;
         }
 
         public Vector3 GridToWorldPosition(int x, int y)

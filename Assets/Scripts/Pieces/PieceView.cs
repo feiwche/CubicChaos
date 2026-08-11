@@ -9,6 +9,7 @@ namespace BlockBrawl.Pieces
         [SerializeField] private float cellSize = 1f;
 
         private BoxCollider2D boxCollider;
+        private Vector2 centerOffset;
 
         public PieceShape Shape { get; private set; }
 
@@ -26,7 +27,7 @@ namespace BlockBrawl.Pieces
         private void SpawnCells()
         {
             (int minX, int maxX, int minY, int maxY) = GetBounds();
-            Vector2 centerOffset = new Vector2((minX + maxX) / 2f, (minY + maxY) / 2f);
+            centerOffset = new Vector2((minX + maxX) / 2f, (minY + maxY) / 2f);
 
             foreach (Vector2Int cell in Shape.cells)
             {
@@ -58,6 +59,11 @@ namespace BlockBrawl.Pieces
             }
 
             return (minX, maxX, minY, maxY);
+        }
+
+        public Vector3 GetShapeOriginWorldPosition()
+        {
+            return transform.position - new Vector3(centerOffset.x, centerOffset.y, 0f) * cellSize;
         }
     }
 }

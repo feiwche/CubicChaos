@@ -48,5 +48,61 @@ namespace BlockBrawl.Grid
                 SetOccupied(originX + cell.x, originY + cell.y, true);
             }
         }
+
+        public List<int> GetFullRows()
+        {
+            List<int> fullRows = new List<int>();
+
+            for (int y = 0; y < Height; y++)
+            {
+                if (IsRowFull(y))
+                {
+                    fullRows.Add(y);
+                }
+            }
+
+            return fullRows;
+        }
+
+        public List<int> GetFullColumns()
+        {
+            List<int> fullColumns = new List<int>();
+
+            for (int x = 0; x < Width; x++)
+            {
+                if (IsColumnFull(x))
+                {
+                    fullColumns.Add(x);
+                }
+            }
+
+            return fullColumns;
+        }
+
+        private bool IsRowFull(int y)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                if (!IsCellOccupied(x, y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool IsColumnFull(int x)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                if (!IsCellOccupied(x, y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

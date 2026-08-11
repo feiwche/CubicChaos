@@ -13,8 +13,11 @@ namespace BlockBrawl.Pieces
         [SerializeField] private float traySlotY = -5f;
         [SerializeField] private float traySlotScale = 0.4f;
 
+        private bool[] slotEmpty;
+
         private void Start()
         {
+            slotEmpty = new bool[slotCount];
             RefillTray();
         }
 
@@ -23,6 +26,7 @@ namespace BlockBrawl.Pieces
             for (int i = 0; i < slotCount; i++)
             {
                 SpawnPieceAtSlot(i);
+                slotEmpty[i] = false;
             }
         }
 
@@ -37,7 +41,30 @@ namespace BlockBrawl.Pieces
             pieceView.Initialize(shape);
 
             PieceDragHandler dragHandler = pieceObject.GetComponent<PieceDragHandler>();
-            dragHandler.Initialize(boardView);
+            dragHandler.Initialize(boardView, this, slotIndex);
+        }
+
+        public void NotifyPieceUsed(int slotIndex)
+        {
+            slotEmpty[slotIndex] = true;
+
+            if (AreAllSlotsEmpty())
+            {
+                RefillTray();
+            }
+        }
+
+        private bool AreAllSlotsEmpty()
+        {
+            foreach (bool empty in slotEmpty)
+            {
+                if (!empty)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private Vector3 GetSlotPosition(int slotIndex)

@@ -11,6 +11,8 @@ namespace BlockBrawl.Pieces
 
         private PieceView pieceView;
         private BoardView boardView;
+        private PieceTray tray;
+        private int slotIndex;
         private Vector3 traySlotPosition;
         private Vector3 traySlotScale;
         private bool isDragging;
@@ -20,9 +22,11 @@ namespace BlockBrawl.Pieces
             pieceView = GetComponent<PieceView>();
         }
 
-        public void Initialize(BoardView board)
+        public void Initialize(BoardView board, PieceTray parentTray, int assignedSlotIndex)
         {
             boardView = board;
+            tray = parentTray;
+            slotIndex = assignedSlotIndex;
             traySlotPosition = transform.position;
             traySlotScale = transform.localScale;
         }
@@ -71,13 +75,15 @@ namespace BlockBrawl.Pieces
         {
             isDragging = false;
 
-            Vector2Int gridOrigin = boardView.WorldToGridPosition(transform.position);
+            Vector3 shapeOriginWorldPosition = pieceView.GetShapeOriginWorldPosition();
+            Vector2Int gridOrigin = boardView.WorldToGridPosition(shapeOriginWorldPosition);
             bool canPlace = boardView.Board.CanPlaceCells(pieceView.Shape.cells, gridOrigin.x, gridOrigin.y);
 
             if (canPlace)
             {
                 boardView.PlaceShapeBlocks(pieceView.Shape.cells, gridOrigin.x, gridOrigin.y);
                 Destroy(gameObject);
+                tray.NotifyPieceUsed(slotIndex);
             }
             else
             {
