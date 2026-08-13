@@ -1,11 +1,13 @@
 using UnityEngine;
 using BlockBrawl.Grid;
+using BlockBrawl.UI;
 
 namespace BlockBrawl.Pieces
 {
     public class PieceTray : MonoBehaviour
     {
         [SerializeField] private BoardView boardView;
+        [SerializeField] private GameOverUI gameOverUI;
         [SerializeField] private PieceShape[] availableShapes;
         [SerializeField] private GameObject piecePrefab;
         [SerializeField] private int slotCount = 3;
@@ -14,10 +16,12 @@ namespace BlockBrawl.Pieces
         [SerializeField] private float traySlotScale = 0.4f;
 
         private bool[] slotEmpty;
+        private PieceShape[] slotShapes;
 
         private void Start()
         {
             slotEmpty = new bool[slotCount];
+            slotShapes = new PieceShape[slotCount];
             RefillTray();
         }
 
@@ -33,6 +37,8 @@ namespace BlockBrawl.Pieces
         private void SpawnPieceAtSlot(int slotIndex)
         {
             PieceShape shape = availableShapes[Random.Range(0, availableShapes.Length)];
+            slotShapes[slotIndex] = shape;
+
             Vector3 slotPosition = GetSlotPosition(slotIndex);
             GameObject pieceObject = Instantiate(piecePrefab, slotPosition, Quaternion.identity, transform);
             pieceObject.transform.localScale = Vector3.one * traySlotScale;
@@ -47,11 +53,14 @@ namespace BlockBrawl.Pieces
         public void NotifyPieceUsed(int slotIndex)
         {
             slotEmpty[slotIndex] = true;
+            slotShapes[slotIndex] = null;
 
             if (AreAllSlotsEmpty())
             {
                 RefillTray();
             }
+
+            CheckGameOver();
         }
 
         private bool AreAllSlotsEmpty()
@@ -65,6 +74,21 @@ namespace BlockBrawl.Pieces
             }
 
             return true;
+        }
+
+        private void CheckGameOver()
+        {
+            for (int i = 0; i < slotCount; i++)
+            {
+                bool slotHasPlaceablePiece = !slotEmpty[i] && boardView.Board.CanPlaceShapeAnywhere(slotShapes[i].cells);
+
+                if (slotHasPlaceablePiece)
+                {
+                    return;
+                }
+            }
+
+            gameOverUI.Show();
         }
 
         private Vector3 GetSlotPosition(int slotIndex)

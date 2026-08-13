@@ -49,6 +49,22 @@ namespace BlockBrawl.Grid
             }
         }
 
+        public bool CanPlaceShapeAnywhere(IEnumerable<Vector2Int> relativeCells)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (CanPlaceCells(relativeCells, x, y))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         public List<int> GetFullRows()
         {
             List<int> fullRows = new List<int>();
