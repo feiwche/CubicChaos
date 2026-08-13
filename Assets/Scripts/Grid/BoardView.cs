@@ -11,10 +11,10 @@ namespace BlockBrawl.Grid
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private float cellSize = 1f;
 
-        [SerializeField] [Range(0f, 1f)] private float prefilledChance = 0.3f;
+        [SerializeField] [Range(0f, 1f)] private float prefilledChance = 0.4f;
         [SerializeField] private int normalMinCells = 4;
         [SerializeField] private int normalMaxCells = 7;
-        [SerializeField] [Range(0f, 1f)] private float denseTierChance = 0.15f;
+        [SerializeField] [Range(0f, 1f)] private float denseTierChance = 0.25f;
         [SerializeField] private int denseMinCells = 10;
         [SerializeField] private int denseMaxCells = 13;
 
@@ -55,23 +55,48 @@ namespace BlockBrawl.Grid
                 ? Random.Range(denseMinCells, denseMaxCells + 1)
                 : Random.Range(normalMinCells, normalMaxCells + 1);
 
-            HashSet<Vector2Int> chosenCells = new HashSet<Vector2Int>();
-
-            while (chosenCells.Count < blockCount)
-            {
-                int x = Random.Range(0, Board.Width);
-                int y = Random.Range(0, Board.Height);
-                chosenCells.Add(new Vector2Int(x, y));
-            }
-
-            PlaceShapeBlocks(chosenCells, 0, 0);
+            HashSet<Vector2Int> chosenCells = GrowRandomCluster(blockCount);
+            PlaceShapeBlocks(chosenCells, 0, 0, countsForScore: false);
         }
 
-        public void PlaceShapeBlocks(IEnumerable<Vector2Int> relativeCells, int originX, int originY)
+        private static readonly Vector2Int[] ClusterDirections =
         {
-            board.PlaceCells(relativeCells, originX, originY);
+            Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
+        };
 
-            foreach (Vector2Int cell in relativeCells)
+        private HashSet<Vector2Int> GrowRandomCluster(int targetCount)
+        {
+            HashSet<Vector2Int> cluster = new HashSet<Vector2Int>
+            {
+                new Vector2Int(Random.Range(0, Board.Width), Random.Range(0, Board.Height))
+            };
+
+            int safetyLimit = targetCount * 30;
+
+            for (int attempt = 0; cluster.Count < targetCount && attempt < safetyLimit; attempt++)
+            {
+                Vector2Int[] clusterCells = new Vector2Int[cluster.Count];
+                cluster.CopyTo(clusterCells);
+
+                Vector2Int fromCell = clusterCells[Random.Range(0, clusterCells.Length)];
+                Vector2Int direction = ClusterDirections[Random.Range(0, ClusterDirections.Length)];
+                Vector2Int candidate = fromCell + direction;
+
+                if (candidate.x >= 0 && candidate.x < Board.Width && candidate.y >= 0 && candidate.y < Board.Height)
+                {
+                    cluster.Add(candidate);
+                }
+            }
+
+            return cluster;
+        }
+
+        public bool PlaceShapeBlocks(IEnumerable<Vector2Int> relativeCells, int originX, int originY, bool countsForScore = true)
+        {
+            List<Vector2Int> cells = new List<Vector2Int>(relativeCells);
+            board.PlaceCells(cells, originX, originY);
+
+            foreach (Vector2Int cell in cells)
             {
                 int x = originX + cell.x;
                 int y = originY + cell.y;
@@ -79,10 +104,15 @@ namespace BlockBrawl.Grid
                 blockVisuals[x, y] = Instantiate(blockCellPrefab, worldPosition, Quaternion.identity, transform);
             }
 
-            ClearFullLines();
+            if (countsForScore && scoreManager != null)
+            {
+                scoreManager.AddPlacedCells(cells.Count);
+            }
+
+            return ClearFullLines(countsForScore);
         }
 
-        private void ClearFullLines()
+        private bool ClearFullLines(bool countsForScore)
         {
             List<int> fullRows = board.GetFullRows();
             List<int> fullColumns = board.GetFullColumns();
@@ -111,10 +141,21 @@ namespace BlockBrawl.Grid
                 }
             }
 
-            if (clearedCellCount > 0 && scoreManager != null)
+            bool clearedAnyLine = fullRows.Count > 0 || fullColumns.Count > 0;
+
+            if (countsForScore && scoreManager != null)
             {
-                scoreManager.AddClearedCells(clearedCellCount);
+                if (clearedAnyLine)
+                {
+                    scoreManager.AddClearedCells(clearedCellCount);
+                }
+                else
+                {
+                    scoreManager.ResetCombo();
+                }
             }
+
+            return clearedAnyLine;
         }
 
         private bool ClearCellVisual(int x, int y)

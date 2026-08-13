@@ -120,5 +120,111 @@ namespace BlockBrawl.Grid
 
             return true;
         }
+
+        public int CountOccupiedCells()
+        {
+            int count = 0;
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (occupied[x, y])
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        public bool CanShapeCompleteLineAnywhere(IEnumerable<Vector2Int> relativeCells)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (CanPlaceCells(relativeCells, x, y) && WouldCompleteLineIfPlaced(relativeCells, x, y))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private bool WouldCompleteLineIfPlaced(IEnumerable<Vector2Int> relativeCells, int originX, int originY)
+        {
+            PlaceCells(relativeCells, originX, originY);
+            bool completesLine = GetFullRows().Count > 0 || GetFullColumns().Count > 0;
+
+            foreach (Vector2Int cell in relativeCells)
+            {
+                SetOccupied(originX + cell.x, originY + cell.y, false);
+            }
+
+            return completesLine;
+        }
+
+        public int GetBestFitScore(IEnumerable<Vector2Int> relativeCells)
+        {
+            List<Vector2Int> cells = new List<Vector2Int>(relativeCells);
+            int bestScore = 0;
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (CanPlaceCells(cells, x, y))
+                    {
+                        int score = GetFitScoreAt(cells, x, y);
+                        if (score > bestScore)
+                        {
+                            bestScore = score;
+                        }
+                    }
+                }
+            }
+
+            return bestScore;
+        }
+
+        private static readonly Vector2Int[] NeighborDirections =
+        {
+            new Vector2Int(1, 0), new Vector2Int(-1, 0), new Vector2Int(0, 1), new Vector2Int(0, -1)
+        };
+
+        private int GetFitScoreAt(List<Vector2Int> relativeCells, int originX, int originY)
+        {
+            HashSet<Vector2Int> absoluteCells = new HashSet<Vector2Int>();
+            foreach (Vector2Int cell in relativeCells)
+            {
+                absoluteCells.Add(new Vector2Int(originX + cell.x, originY + cell.y));
+            }
+
+            int score = 0;
+
+            foreach (Vector2Int cell in absoluteCells)
+            {
+                foreach (Vector2Int direction in NeighborDirections)
+                {
+                    Vector2Int neighbor = cell + direction;
+
+                    if (absoluteCells.Contains(neighbor))
+                    {
+                        continue;
+                    }
+
+                    if (!IsInsideBoard(neighbor.x, neighbor.y) || IsCellOccupied(neighbor.x, neighbor.y))
+                    {
+                        score++;
+                    }
+                }
+            }
+
+            return score;
+        }
     }
 }

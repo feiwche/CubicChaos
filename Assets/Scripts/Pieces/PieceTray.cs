@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using BlockBrawl.Core;
 using BlockBrawl.Grid;
 using BlockBrawl.UI;
 
@@ -9,12 +10,17 @@ namespace BlockBrawl.Pieces
     {
         [SerializeField] private BoardView boardView;
         [SerializeField] private GameOverUI gameOverUI;
+        [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private PieceShape[] availableShapes;
         [SerializeField] private GameObject piecePrefab;
         [SerializeField] private int slotCount = 3;
         [SerializeField] private float slotSpacing = 2.5f;
         [SerializeField] private float traySlotY = -5f;
         [SerializeField] private float traySlotScale = 0.4f;
+        [SerializeField] private float lineClearWeightMultiplier = 4f;
+        [SerializeField] private float fitBonusPerEdge = 0.6f;
+        [SerializeField] private float difficultyBonusPerCell = 0.4f;
+        [SerializeField] private int difficultyRampScore = 1000;
 
         private bool[] slotEmpty;
         private PieceShape[] slotShapes;
@@ -79,18 +85,23 @@ namespace BlockBrawl.Pieces
 
         private PieceShape ChooseShape()
         {
-            List<PieceShape> placeableShapes = GetPlaceableShapes();
+            Board board = boardView.Board;
+            List<PieceShape> placeableShapes = GetPlaceableShapes(board);
             IReadOnlyList<PieceShape> pool = placeableShapes.Count > 0 ? placeableShapes : availableShapes;
-            return WeightedRandomShape(pool);
+
+            float fillRatio = board.CountOccupiedCells() / (float)(Board.Width * Board.Height);
+            float difficultyFactor = Mathf.Clamp01(scoreManager.Score / (float)difficultyRampScore);
+
+            return WeightedRandomShape(pool, board, fillRatio, difficultyFactor);
         }
 
-        private List<PieceShape> GetPlaceableShapes()
+        private List<PieceShape> GetPlaceableShapes(Board board)
         {
             List<PieceShape> placeable = new List<PieceShape>();
 
             foreach (PieceShape shape in availableShapes)
             {
-                if (boardView.Board.CanPlaceShapeAnywhere(shape.cells))
+                if (board.CanPlaceShapeAnywhere(shape.cells))
                 {
                     placeable.Add(shape);
                 }
@@ -99,27 +110,64 @@ namespace BlockBrawl.Pieces
             return placeable;
         }
 
-        private PieceShape WeightedRandomShape(IReadOnlyList<PieceShape> pool)
+        private PieceShape WeightedRandomShape(IReadOnlyList<PieceShape> pool, Board board, float fillRatio, float difficultyFactor)
         {
+            int[] effectiveWeights = new int[pool.Count];
             int totalWeight = 0;
-            foreach (PieceShape shape in pool)
+
+            for (int i = 0; i < pool.Count; i++)
             {
-                totalWeight += shape.weight;
+                effectiveWeights[i] = GetEffectiveWeight(pool[i], board, fillRatio, difficultyFactor);
+                totalWeight += effectiveWeights[i];
             }
 
             int roll = Random.Range(0, totalWeight);
             int cumulative = 0;
 
-            foreach (PieceShape shape in pool)
+            for (int i = 0; i < pool.Count; i++)
             {
-                cumulative += shape.weight;
+                cumulative += effectiveWeights[i];
                 if (roll < cumulative)
                 {
-                    return shape;
+                    return pool[i];
                 }
             }
 
             return pool[pool.Count - 1];
+        }
+
+        private int GetEffectiveWeight(PieceShape shape, Board board, float fillRatio, float difficultyFactor)
+        {
+            float weight = shape.weight;
+
+            // Oyun ilerledikçe (skor arttıkça) büyük parçalar kademeli olarak biraz daha sık gelir.
+            weight += difficultyFactor * shape.cells.Length * difficultyBonusPerCell;
+
+            // Tahta dolulaştıkça büyük parçalara karşı bir koruma uygulanır; zorluk arttıkça bu koruma zayıflar
+            // (erken oyunda daha cömert, geç oyunda daha az cömert - "insani" bir zorlaşma eğrisi).
+            float protectionFactor = Mathf.Lerp(0.5f, 0.85f, difficultyFactor);
+
+            if (fillRatio > 0.5f && shape.cells.Length >= 5)
+            {
+                weight *= protectionFactor;
+            }
+
+            if (fillRatio > 0.7f && shape.cells.Length >= 4)
+            {
+                weight *= protectionFactor;
+            }
+
+            // Tahtadaki boşluklara/kenarlara iyi oturan şekiller biraz daha sık gelir (akıcılık).
+            int fitScore = board.GetBestFitScore(shape.cells);
+            weight += fitScore * fitBonusPerEdge;
+
+            // Şu an gerçekten bir satır/sütun tamamlayabiliyorsa belirgin bonus verilir.
+            if (board.CanShapeCompleteLineAnywhere(shape.cells))
+            {
+                weight *= lineClearWeightMultiplier;
+            }
+
+            return Mathf.Max(1, Mathf.RoundToInt(weight));
         }
 
         private void CheckGameOver()

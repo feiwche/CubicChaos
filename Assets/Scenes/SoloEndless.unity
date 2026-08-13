@@ -502,6 +502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardView: {fileID: 808134902}
   gameOverUI: {fileID: 950000006}
+  scoreManager: {fileID: 258192123}
   availableShapes:
   - {fileID: 11400000, guid: 0652f44c27fc0c36b7b2c2cba012b416, type: 2}
   - {fileID: 11400000, guid: bf20a0ca3eadb54798538464989e77ec, type: 2}
