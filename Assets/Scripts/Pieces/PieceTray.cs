@@ -24,11 +24,15 @@ namespace BlockBrawl.Pieces
 
         private bool[] slotEmpty;
         private PieceShape[] slotShapes;
+        private GameObject[] slotPieceObjects;
+
+        public event System.Action<int> SlotRefilled;
 
         private void Start()
         {
             slotEmpty = new bool[slotCount];
             slotShapes = new PieceShape[slotCount];
+            slotPieceObjects = new GameObject[slotCount];
             RefillTray();
         }
 
@@ -49,18 +53,22 @@ namespace BlockBrawl.Pieces
             Vector3 slotPosition = GetSlotPosition(slotIndex);
             GameObject pieceObject = Instantiate(piecePrefab, slotPosition, Quaternion.identity, transform);
             pieceObject.transform.localScale = Vector3.one * traySlotScale;
+            slotPieceObjects[slotIndex] = pieceObject;
 
             PieceView pieceView = pieceObject.GetComponent<PieceView>();
             pieceView.Initialize(shape);
 
             PieceDragHandler dragHandler = pieceObject.GetComponent<PieceDragHandler>();
             dragHandler.Initialize(boardView, this, slotIndex);
+
+            SlotRefilled?.Invoke(slotIndex);
         }
 
         public void NotifyPieceUsed(int slotIndex)
         {
             slotEmpty[slotIndex] = true;
             slotShapes[slotIndex] = null;
+            slotPieceObjects[slotIndex] = null;
 
             if (AreAllSlotsEmpty())
             {
@@ -68,6 +76,31 @@ namespace BlockBrawl.Pieces
             }
 
             CheckGameOver();
+        }
+
+        public bool IsSlotEmpty(int slotIndex)
+        {
+            return slotEmpty[slotIndex];
+        }
+
+        public GameObject GetSlotPieceObject(int slotIndex)
+        {
+            return slotPieceObjects[slotIndex];
+        }
+
+        public void ForceReplaceSlot(int slotIndex)
+        {
+            if (slotEmpty[slotIndex])
+            {
+                return;
+            }
+
+            if (slotPieceObjects[slotIndex] != null)
+            {
+                Destroy(slotPieceObjects[slotIndex]);
+            }
+
+            SpawnPieceAtSlot(slotIndex);
         }
 
         private bool AreAllSlotsEmpty()

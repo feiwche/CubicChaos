@@ -32,5 +32,11 @@ namespace BlockBrawl.Core
         {
             ComboCount = 0;
         }
+
+        public void ApplyPenalty(int points)
+        {
+            Score = Mathf.Max(0, Score - points);
+            ScoreChanged?.Invoke(Score);
+        }
     }
 }
