@@ -704,7 +704,7 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_Color: {r: 0.8, g: 0.3, b: 0.3, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_Sprite: {fileID: 0}
@@ -756,7 +756,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 200000043}
   m_OnClick:
     m_PersistentCalls:
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
-  m_text: "Şamata Modu (Yakında)"
+  m_text: Şamata Modu
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
