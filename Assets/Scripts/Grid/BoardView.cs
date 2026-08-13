@@ -17,6 +17,7 @@ namespace BlockBrawl.Grid
         [SerializeField] [Range(0f, 1f)] private float denseTierChance = 0.25f;
         [SerializeField] private int denseMinCells = 10;
         [SerializeField] private int denseMaxCells = 13;
+        [SerializeField] private float clearStaggerStep = 0.025f;
 
         private readonly GameObject[,] blockVisuals = new GameObject[Board.Width, Board.Height];
 
@@ -123,7 +124,7 @@ namespace BlockBrawl.Grid
             {
                 for (int x = 0; x < Board.Width; x++)
                 {
-                    if (ClearCellVisual(x, y))
+                    if (ClearCellVisual(x, y, x * clearStaggerStep))
                     {
                         clearedCellCount++;
                     }
@@ -134,7 +135,7 @@ namespace BlockBrawl.Grid
             {
                 for (int y = 0; y < Board.Height; y++)
                 {
-                    if (ClearCellVisual(x, y))
+                    if (ClearCellVisual(x, y, y * clearStaggerStep))
                     {
                         clearedCellCount++;
                     }
@@ -158,16 +159,27 @@ namespace BlockBrawl.Grid
             return clearedAnyLine;
         }
 
-        private bool ClearCellVisual(int x, int y)
+        private bool ClearCellVisual(int x, int y, float delay)
         {
             if (blockVisuals[x, y] == null)
             {
                 return false;
             }
 
-            Destroy(blockVisuals[x, y]);
+            GameObject visual = blockVisuals[x, y];
             blockVisuals[x, y] = null;
             board.SetOccupied(x, y, false);
+
+            BlockCellEffect effect = visual.GetComponent<BlockCellEffect>();
+            if (effect != null)
+            {
+                effect.PlayClearAndDestroy(delay);
+            }
+            else
+            {
+                Destroy(visual);
+            }
+
             return true;
         }
 
