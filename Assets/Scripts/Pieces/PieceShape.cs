@@ -6,5 +6,6 @@ namespace BlockBrawl.Pieces
     public class PieceShape : ScriptableObject
     {
         public Vector2Int[] cells;
+        public int weight = 10;
     }
 }

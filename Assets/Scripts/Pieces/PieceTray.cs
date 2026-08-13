@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using BlockBrawl.Grid;
 using BlockBrawl.UI;
@@ -36,7 +37,7 @@ namespace BlockBrawl.Pieces
 
         private void SpawnPieceAtSlot(int slotIndex)
         {
-            PieceShape shape = availableShapes[Random.Range(0, availableShapes.Length)];
+            PieceShape shape = ChooseShape();
             slotShapes[slotIndex] = shape;
 
             Vector3 slotPosition = GetSlotPosition(slotIndex);
@@ -74,6 +75,51 @@ namespace BlockBrawl.Pieces
             }
 
             return true;
+        }
+
+        private PieceShape ChooseShape()
+        {
+            List<PieceShape> placeableShapes = GetPlaceableShapes();
+            IReadOnlyList<PieceShape> pool = placeableShapes.Count > 0 ? placeableShapes : availableShapes;
+            return WeightedRandomShape(pool);
+        }
+
+        private List<PieceShape> GetPlaceableShapes()
+        {
+            List<PieceShape> placeable = new List<PieceShape>();
+
+            foreach (PieceShape shape in availableShapes)
+            {
+                if (boardView.Board.CanPlaceShapeAnywhere(shape.cells))
+                {
+                    placeable.Add(shape);
+                }
+            }
+
+            return placeable;
+        }
+
+        private PieceShape WeightedRandomShape(IReadOnlyList<PieceShape> pool)
+        {
+            int totalWeight = 0;
+            foreach (PieceShape shape in pool)
+            {
+                totalWeight += shape.weight;
+            }
+
+            int roll = Random.Range(0, totalWeight);
+            int cumulative = 0;
+
+            foreach (PieceShape shape in pool)
+            {
+                cumulative += shape.weight;
+                if (roll < cumulative)
+                {
+                    return shape;
+                }
+            }
+
+            return pool[pool.Count - 1];
         }
 
         private void CheckGameOver()

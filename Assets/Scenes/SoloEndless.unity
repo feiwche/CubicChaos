@@ -509,6 +509,34 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e3f958c41400c851186ea030d9ffefce, type: 2}
   - {fileID: 11400000, guid: 58744d69278ba494633a6c2fecea4e36, type: 2}
   - {fileID: 11400000, guid: 35cbb76a0114d820814fbf792685359b, type: 2}
+  - {fileID: 11400000, guid: 1c249839a132010c086595a78e27d86a, type: 2}
+  - {fileID: 11400000, guid: 09724d8f2daee9613bbee07cee1671f0, type: 2}
+  - {fileID: 11400000, guid: aec2790ed092374c03452eef9a67cde2, type: 2}
+  - {fileID: 11400000, guid: 53ee626dbc0dba3e0e6156cac3329166, type: 2}
+  - {fileID: 11400000, guid: 99179da64121b0c9c6a2750cda53636b, type: 2}
+  - {fileID: 11400000, guid: 45547f545351ca69d34c3578777f5453, type: 2}
+  - {fileID: 11400000, guid: 85f25384ac98d6116428febcd191cdcc, type: 2}
+  - {fileID: 11400000, guid: 56fce2fcaeada3b5941890412a1adba2, type: 2}
+  - {fileID: 11400000, guid: 9105319ecba9e98747f6107d1fa30940, type: 2}
+  - {fileID: 11400000, guid: 975408882946b1ce0692aaab32243f83, type: 2}
+  - {fileID: 11400000, guid: a324f47612e33f375d2f6f78af0968be, type: 2}
+  - {fileID: 11400000, guid: f394a4423c7f21340bd2d6ab7df12c83, type: 2}
+  - {fileID: 11400000, guid: b3912cfdfdf5dd90f0a51697b6b0b567, type: 2}
+  - {fileID: 11400000, guid: 9cd6dc09b811318d5b568c38b0c9f1d6, type: 2}
+  - {fileID: 11400000, guid: 39fb8ae7603c97e2e0fe6ee22d074e8e, type: 2}
+  - {fileID: 11400000, guid: 2c9038c9dd9de8c37295559bf13635eb, type: 2}
+  - {fileID: 11400000, guid: fa0bdf1d76a762e59340867b926935ec, type: 2}
+  - {fileID: 11400000, guid: db39dd8561ab26268f79e0a5b2990e0c, type: 2}
+  - {fileID: 11400000, guid: dfa20dea27abe43b1696cd9f561c9a75, type: 2}
+  - {fileID: 11400000, guid: f8e5fea6e2315d603c28875ef21a3139, type: 2}
+  - {fileID: 11400000, guid: e38a9e7c91a4974be6386749731ad227, type: 2}
+  - {fileID: 11400000, guid: cc4a2a176a0b087421a6e059937651de, type: 2}
+  - {fileID: 11400000, guid: c68ca974054fd860143bdf26ea66cbb3, type: 2}
+  - {fileID: 11400000, guid: 8048fd6336f486f2cf90eaef8946dfed, type: 2}
+  - {fileID: 11400000, guid: 55dfe4735fdc8582ca7bef88587bdeca, type: 2}
+  - {fileID: 11400000, guid: 61e7651c25edb9b77f732d90b8b5921c, type: 2}
+  - {fileID: 11400000, guid: f3b569d3c1709f6b2e7fd6c65f7d49a3, type: 2}
+  - {fileID: 11400000, guid: aab82691f118e7a0a98aa63fa428db0f, type: 2}
   piecePrefab: {fileID: 100300001, guid: 62d2d8b4d1717b04d43e52785828247f, type: 3}
   slotCount: 3
   slotSpacing: 2.5
