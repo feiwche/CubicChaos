@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public enum PowerUpType
     {

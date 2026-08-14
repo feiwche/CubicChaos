@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace BlockBrawl.Pieces
+namespace CubicChaos.Pieces
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class PieceView : MonoBehaviour

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public class ChaosPhaseUI : MonoBehaviour
     {

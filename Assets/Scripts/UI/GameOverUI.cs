@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace BlockBrawl.UI
+namespace CubicChaos.UI
 {
     public class GameOverUI : MonoBehaviour
     {

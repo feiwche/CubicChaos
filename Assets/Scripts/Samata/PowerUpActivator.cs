@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using BlockBrawl.Core;
-using BlockBrawl.Grid;
-using BlockBrawl.Pieces;
+using CubicChaos.Core;
+using CubicChaos.Grid;
+using CubicChaos.Pieces;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public class PowerUpActivator : MonoBehaviour
     {

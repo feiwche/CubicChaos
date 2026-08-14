@@ -1,8 +1,8 @@
 using UnityEngine;
 using TMPro;
-using BlockBrawl.Core;
+using CubicChaos.Core;
 
-namespace BlockBrawl.UI
+namespace CubicChaos.UI
 {
     public class ScoreUI : MonoBehaviour
     {

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BlockBrawl.Core;
-using BlockBrawl.Grid;
-using BlockBrawl.UI;
+using CubicChaos.Core;
+using CubicChaos.Grid;
+using CubicChaos.UI;
 
-namespace BlockBrawl.Pieces
+namespace CubicChaos.Pieces
 {
     public class PieceTray : MonoBehaviour
     {

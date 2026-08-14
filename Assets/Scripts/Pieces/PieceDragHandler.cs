@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using BlockBrawl.Grid;
+using CubicChaos.Grid;
 
-namespace BlockBrawl.Pieces
+namespace CubicChaos.Pieces
 {
     [RequireComponent(typeof(PieceView))]
     public class PieceDragHandler : MonoBehaviour

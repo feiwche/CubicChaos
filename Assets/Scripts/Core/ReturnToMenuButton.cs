@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace BlockBrawl.Core
+namespace CubicChaos.Core
 {
     public class ReturnToMenuButton : MonoBehaviour
     {

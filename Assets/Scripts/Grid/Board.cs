@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BlockBrawl.Grid
+namespace CubicChaos.Grid
 {
     public class Board
     {

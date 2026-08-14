@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using BlockBrawl.Core;
+using CubicChaos.Core;
 
-namespace BlockBrawl.Grid
+namespace CubicChaos.Grid
 {
     public class BoardView : MonoBehaviour
     {

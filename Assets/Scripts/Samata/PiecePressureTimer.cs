@@ -1,8 +1,8 @@
 using UnityEngine;
-using BlockBrawl.Core;
-using BlockBrawl.Pieces;
+using CubicChaos.Core;
+using CubicChaos.Pieces;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public class PiecePressureTimer : MonoBehaviour
     {

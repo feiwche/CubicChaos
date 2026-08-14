@@ -430,7 +430,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc218503478b9484c918fc6bdced0cac, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BlockBrawl.Grid.BoardView
+  m_EditorClassIdentifier: Assembly-CSharp::CubicChaos.Grid.BoardView
   cellPrefab: {fileID: 100100001, guid: 6ed064c514e7c07a3d92101c47f438fe, type: 3}
   blockCellPrefab: {fileID: 100400001, guid: 08de0a54f6f6d9143d78e2e0e99537de, type: 3}
   scoreManager: {fileID: 258192123}

@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace BlockBrawl.Pieces
+namespace CubicChaos.Pieces
 {
-    [CreateAssetMenu(fileName = "NewPieceShape", menuName = "BlockBrawl/Piece Shape")]
+    [CreateAssetMenu(fileName = "NewPieceShape", menuName = "CubicChaos/Piece Shape")]
     public class PieceShape : ScriptableObject
     {
         public Vector2Int[] cells;

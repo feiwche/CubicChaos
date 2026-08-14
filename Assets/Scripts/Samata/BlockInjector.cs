@@ -1,8 +1,8 @@
 using UnityEngine;
-using BlockBrawl.Grid;
-using BlockBrawl.Pieces;
+using CubicChaos.Grid;
+using CubicChaos.Pieces;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public class BlockInjector : MonoBehaviour
     {

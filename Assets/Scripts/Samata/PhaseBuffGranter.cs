@@ -1,7 +1,7 @@
 using UnityEngine;
-using BlockBrawl.Core;
+using CubicChaos.Core;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public class PhaseBuffGranter : MonoBehaviour
     {

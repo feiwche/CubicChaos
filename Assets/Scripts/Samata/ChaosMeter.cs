@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace BlockBrawl.Samata
+namespace CubicChaos.Samata
 {
     public enum ChaosPhase
     {
