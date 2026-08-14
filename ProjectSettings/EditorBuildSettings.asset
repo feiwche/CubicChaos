@@ -14,11 +14,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SamataMode.unity
     guid: 74185a43efa4d2835850fc8c791d7a3b
-  - enabled: 1
-    path: Assets/Scenes/NetworkTest.unity
-    guid: 262f316e24dddf5c3897197b6c6dd339
-  - enabled: 1
-    path: Assets/Scenes/DuelloMode.unity
-    guid: db12395741d8e149d49f990f152f4bf5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
