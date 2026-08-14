@@ -10,9 +10,11 @@ namespace BlockBrawl.Samata
         [SerializeField] private ChaosMeter chaosMeter;
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private int slotCount = 3;
-        [SerializeField] private float sakinTimeLimit = 10f;
-        [SerializeField] private float ortaTimeLimit = 7f;
-        [SerializeField] private float kaosTimeLimit = 4f;
+        [SerializeField] private float sakinTimeLimit = 12f;
+        [SerializeField] private float ortaTimeLimit = 9f;
+        [SerializeField] private float kaosTimeLimitStart = 6f;
+        [SerializeField] private float kaosTimeLimitMin = 4f;
+        [SerializeField] private float kaosRampDuration = 30f;
         [SerializeField] private int expiredPenaltyPoints = 15;
 
         private float[] slotTimers;
@@ -91,10 +93,17 @@ namespace BlockBrawl.Samata
                 case ChaosPhase.Orta:
                     return ortaTimeLimit;
                 case ChaosPhase.Kaos:
-                    return kaosTimeLimit;
+                    return GetKaosTimeLimit();
                 default:
                     return sakinTimeLimit;
             }
+        }
+
+        private float GetKaosTimeLimit()
+        {
+            float timeInKaos = chaosMeter.ElapsedTime - chaosMeter.KaosPhaseStartTime;
+            float t = Mathf.Clamp01(timeInKaos / kaosRampDuration);
+            return Mathf.Lerp(kaosTimeLimitStart, kaosTimeLimitMin, t);
         }
     }
 }

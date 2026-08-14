@@ -7,8 +7,8 @@ namespace BlockBrawl.Samata
     {
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private PowerUpInventory inventory;
-        [SerializeField] private int comboRewardInterval = 3;
-        [SerializeField] private int scoreRewardInterval = 250;
+        [SerializeField] private int comboRewardInterval = 4;
+        [SerializeField] private int scoreRewardInterval = 350;
 
         private int lastCheckedComboCount;
         private int lastRewardedScoreTier;

@@ -21,6 +21,7 @@ namespace BlockBrawl.Samata
         public ChaosPhase CurrentPhase { get; private set; } = ChaosPhase.Sakin;
         public float ElapsedTime { get; private set; }
         public bool IsFrozen { get; private set; }
+        public float KaosPhaseStartTime => kaosPhaseStartTime;
 
         private Coroutine freezeRoutine;
 

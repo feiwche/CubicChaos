@@ -1554,9 +1554,11 @@ MonoBehaviour:
   chaosMeter: {fileID: 600000003}
   scoreManager: {fileID: 258192123}
   slotCount: 3
-  sakinTimeLimit: 10
-  ortaTimeLimit: 7
-  kaosTimeLimit: 4
+  sakinTimeLimit: 12
+  ortaTimeLimit: 9
+  kaosTimeLimitStart: 6
+  kaosTimeLimitMin: 4
+  kaosRampDuration: 30
   expiredPenaltyPoints: 15
 --- !u!1 &800000001
 GameObject:
@@ -1776,8 +1778,8 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   scoreManager: {fileID: 258192123}
   inventory: {fileID: 750000003}
-  comboRewardInterval: 3
-  scoreRewardInterval: 250
+  comboRewardInterval: 4
+  scoreRewardInterval: 350
 --- !u!1 &770000001
 GameObject:
   m_ObjectHideFlags: 0
