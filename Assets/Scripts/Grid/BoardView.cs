@@ -10,6 +10,7 @@ namespace BlockBrawl.Grid
         [SerializeField] private GameObject blockCellPrefab;
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private float cellSize = 1f;
+        [SerializeField] private Vector3 boardOrigin = Vector3.zero;
 
         [SerializeField] [Range(0f, 1f)] private float prefilledChance = 0.4f;
         [SerializeField] private int normalMinCells = 4;
@@ -239,13 +240,14 @@ namespace BlockBrawl.Grid
         {
             float worldX = (x - Board.Width / 2f + 0.5f) * cellSize;
             float worldY = (y - Board.Height / 2f + 0.5f) * cellSize;
-            return new Vector3(worldX, worldY, 0f);
+            return new Vector3(worldX, worldY, 0f) + boardOrigin;
         }
 
         public Vector2Int WorldToGridPosition(Vector3 worldPosition)
         {
-            int x = Mathf.RoundToInt(worldPosition.x / cellSize + Board.Width / 2f - 0.5f);
-            int y = Mathf.RoundToInt(worldPosition.y / cellSize + Board.Height / 2f - 0.5f);
+            Vector3 localPosition = worldPosition - boardOrigin;
+            int x = Mathf.RoundToInt(localPosition.x / cellSize + Board.Width / 2f - 0.5f);
+            int y = Mathf.RoundToInt(localPosition.y / cellSize + Board.Height / 2f - 0.5f);
             return new Vector2Int(x, y);
         }
     }

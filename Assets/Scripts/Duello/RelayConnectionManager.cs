@@ -9,6 +9,7 @@ using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace BlockBrawl.Duello
 {
@@ -82,6 +83,11 @@ namespace BlockBrawl.Duello
         private void HandleClientConnected(ulong clientId)
         {
             StatusChanged?.Invoke($"Baglanti kuruldu. Client ID: {clientId}");
+
+            if (NetworkManager.Singleton.IsServer && NetworkManager.Singleton.ConnectedClientsIds.Count >= 2)
+            {
+                NetworkManager.Singleton.SceneManager.LoadScene("DuelloMode", LoadSceneMode.Single);
+            }
         }
 
         private static RelayServerData BuildHostRelayServerData(Allocation allocation, string connectionType)
