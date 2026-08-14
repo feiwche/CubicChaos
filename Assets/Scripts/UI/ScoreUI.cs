@@ -8,6 +8,8 @@ namespace CubicChaos.UI
     {
         [SerializeField] private ScoreManager scoreManager;
         [SerializeField] private TMP_Text scoreText;
+        [SerializeField] private TMP_Text bestText;
+        [SerializeField] private string modeKey = "Normal";
 
         private void OnEnable()
         {
@@ -23,6 +25,8 @@ namespace CubicChaos.UI
         private void UpdateScoreText(int score)
         {
             scoreText.text = $"Skor: {score}";
+            HighScoreManager.TrySetBest(modeKey, score);
+            bestText.text = $"Rekor: {HighScoreManager.GetBest(modeKey)}";
         }
     }
 }

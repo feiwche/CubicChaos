@@ -6,12 +6,15 @@ namespace CubicChaos.Samata
     public class PowerUpInventoryUI : MonoBehaviour
     {
         [SerializeField] private PowerUpInventory inventory;
-        [SerializeField] private TMP_Text inventoryText;
+        [SerializeField] private TMP_Text bombaBadge;
+        [SerializeField] private TMP_Text dondurmaBadge;
+        [SerializeField] private TMP_Text karistirmaBadge;
+        [SerializeField] private TMP_Text ciftPuanBadge;
 
         private void OnEnable()
         {
             inventory.InventoryChanged += HandleInventoryChanged;
-            RefreshText();
+            RefreshBadges();
         }
 
         private void OnDisable()
@@ -21,17 +24,15 @@ namespace CubicChaos.Samata
 
         private void HandleInventoryChanged(PowerUpType type, int count)
         {
-            RefreshText();
+            RefreshBadges();
         }
 
-        private void RefreshText()
+        private void RefreshBadges()
         {
-            int bomba = inventory.GetCount(PowerUpType.Bomba);
-            int dondurma = inventory.GetCount(PowerUpType.Dondurma);
-            int karistirma = inventory.GetCount(PowerUpType.Karistirma);
-            int ciftPuan = inventory.GetCount(PowerUpType.CiftPuan);
-
-            inventoryText.text = $"B:{bomba} D:{dondurma} K:{karistirma} 2x:{ciftPuan}";
+            bombaBadge.text = inventory.GetCount(PowerUpType.Bomba).ToString();
+            dondurmaBadge.text = inventory.GetCount(PowerUpType.Dondurma).ToString();
+            karistirmaBadge.text = inventory.GetCount(PowerUpType.Karistirma).ToString();
+            ciftPuanBadge.text = inventory.GetCount(PowerUpType.CiftPuan).ToString();
         }
     }
 }
