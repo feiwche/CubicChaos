@@ -5,14 +5,17 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 9baff8ffa7b5f1bb96c226af5624e698
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SoloEndless.unity
     guid: 0e6e00c9993bb1e4982cfd029665bd61
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SamataMode.unity
     guid: 74185a43efa4d2835850fc8c791d7a3b
+  - enabled: 1
+    path: Assets/Scenes/NetworkTest.unity
+    guid: 262f316e24dddf5c3897197b6c6dd339
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
