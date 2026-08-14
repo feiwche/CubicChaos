@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace BlockBrawl.Samata
@@ -19,11 +20,37 @@ namespace BlockBrawl.Samata
 
         public ChaosPhase CurrentPhase { get; private set; } = ChaosPhase.Sakin;
         public float ElapsedTime { get; private set; }
+        public bool IsFrozen { get; private set; }
+
+        private Coroutine freezeRoutine;
 
         private void Update()
         {
+            if (IsFrozen)
+            {
+                return;
+            }
+
             ElapsedTime += Time.deltaTime;
             UpdatePhase();
+        }
+
+        public void Freeze(float duration)
+        {
+            if (freezeRoutine != null)
+            {
+                StopCoroutine(freezeRoutine);
+            }
+
+            freezeRoutine = StartCoroutine(FreezeRoutine(duration));
+        }
+
+        private IEnumerator FreezeRoutine(float duration)
+        {
+            IsFrozen = true;
+            yield return new WaitForSeconds(duration);
+            IsFrozen = false;
+            freezeRoutine = null;
         }
 
         private void UpdatePhase()

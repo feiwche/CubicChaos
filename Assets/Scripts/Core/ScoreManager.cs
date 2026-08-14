@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace BlockBrawl.Core
@@ -13,10 +14,13 @@ namespace BlockBrawl.Core
 
         public int Score { get; private set; }
         public int ComboCount { get; private set; }
+        public bool IsDoubleScoreActive { get; private set; }
+
+        private Coroutine doubleScoreRoutine;
 
         public void AddPlacedCells(int cellCount)
         {
-            Score += cellCount * pointsPerPlacedCell;
+            Score += ApplyMultiplier(cellCount * pointsPerPlacedCell);
             ScoreChanged?.Invoke(Score);
         }
 
@@ -24,7 +28,7 @@ namespace BlockBrawl.Core
         {
             ComboCount++;
             int comboBonus = (ComboCount - 1) * comboBonusPerStep;
-            Score += cellCount * pointsPerClearedCell + comboBonus;
+            Score += ApplyMultiplier(cellCount * pointsPerClearedCell + comboBonus);
             ScoreChanged?.Invoke(Score);
         }
 
@@ -37,6 +41,29 @@ namespace BlockBrawl.Core
         {
             Score = Mathf.Max(0, Score - points);
             ScoreChanged?.Invoke(Score);
+        }
+
+        public void ActivateDoubleScore(float duration)
+        {
+            if (doubleScoreRoutine != null)
+            {
+                StopCoroutine(doubleScoreRoutine);
+            }
+
+            doubleScoreRoutine = StartCoroutine(DoubleScoreRoutine(duration));
+        }
+
+        private IEnumerator DoubleScoreRoutine(float duration)
+        {
+            IsDoubleScoreActive = true;
+            yield return new WaitForSeconds(duration);
+            IsDoubleScoreActive = false;
+            doubleScoreRoutine = null;
+        }
+
+        private int ApplyMultiplier(int points)
+        {
+            return IsDoubleScoreActive ? points * 2 : points;
         }
     }
 }

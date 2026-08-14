@@ -203,6 +203,14 @@ namespace BlockBrawl.Grid
             return clearedAnyLine;
         }
 
+        public void DestroyCellAt(int x, int y)
+        {
+            if (board.IsInsideBoard(x, y) && board.IsCellOccupied(x, y))
+            {
+                ClearCellVisual(x, y, 0f);
+            }
+        }
+
         private bool ClearCellVisual(int x, int y, float delay)
         {
             if (blockVisuals[x, y] == null)

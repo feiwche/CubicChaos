@@ -22,6 +22,11 @@ namespace BlockBrawl.Samata
 
         private void Update()
         {
+            if (chaosMeter.IsFrozen)
+            {
+                return;
+            }
+
             timer += Time.deltaTime;
 
             if (timer >= GetCurrentInterval())

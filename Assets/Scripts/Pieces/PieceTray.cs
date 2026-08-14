@@ -93,6 +93,20 @@ namespace BlockBrawl.Pieces
             CheckGameOver();
         }
 
+        public void ForceRefillAll()
+        {
+            for (int i = 0; i < slotCount; i++)
+            {
+                if (slotPieceObjects[i] != null)
+                {
+                    Destroy(slotPieceObjects[i]);
+                }
+            }
+
+            RefillTray();
+            CheckGameOver();
+        }
+
         public void ForceReplaceSlot(int slotIndex)
         {
             if (slotEmpty[slotIndex])

@@ -34,6 +34,11 @@ namespace BlockBrawl.Samata
 
         private void Update()
         {
+            if (chaosMeter.IsFrozen)
+            {
+                return;
+            }
+
             float limit = GetCurrentTimeLimit();
 
             for (int i = 0; i < slotCount; i++)
