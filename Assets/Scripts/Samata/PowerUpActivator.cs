@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using BlockBrawl.Core;
@@ -42,10 +43,19 @@ namespace BlockBrawl.Samata
 
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
+                if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+
                 Vector3 worldPoint = GetPointerWorldPosition();
                 Vector2Int gridPosition = boardView.WorldToGridPosition(worldPoint);
-                boardView.DestroyCellAt(gridPosition.x, gridPosition.y);
-                waitingForBombTarget = false;
+
+                if (boardView.Board.IsInsideBoard(gridPosition.x, gridPosition.y))
+                {
+                    boardView.DestroyCellAt(gridPosition.x, gridPosition.y);
+                    waitingForBombTarget = false;
+                }
             }
         }
 
