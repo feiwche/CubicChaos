@@ -56,7 +56,19 @@ namespace BlockBrawl.Grid
                 ? Random.Range(denseMinCells, denseMaxCells + 1)
                 : Random.Range(normalMinCells, normalMaxCells + 1);
 
-            HashSet<Vector2Int> chosenCells = GrowRandomCluster(blockCount);
+            HashSet<Vector2Int> chosenCells = GrowRandomCluster(blockCount, onlyEmptyCells: false);
+            PlaceShapeBlocks(chosenCells, 0, 0, countsForScore: false);
+        }
+
+        public void InjectRandomBlocks(int blockCount)
+        {
+            HashSet<Vector2Int> chosenCells = GrowRandomCluster(blockCount, onlyEmptyCells: true);
+
+            if (chosenCells.Count == 0)
+            {
+                return;
+            }
+
             PlaceShapeBlocks(chosenCells, 0, 0, countsForScore: false);
         }
 
@@ -65,12 +77,18 @@ namespace BlockBrawl.Grid
             Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right
         };
 
-        private HashSet<Vector2Int> GrowRandomCluster(int targetCount)
+        private HashSet<Vector2Int> GrowRandomCluster(int targetCount, bool onlyEmptyCells)
         {
-            HashSet<Vector2Int> cluster = new HashSet<Vector2Int>
+            Vector2Int? startCell = onlyEmptyCells
+                ? FindRandomEmptyCell()
+                : new Vector2Int(Random.Range(0, Board.Width), Random.Range(0, Board.Height));
+
+            if (startCell == null)
             {
-                new Vector2Int(Random.Range(0, Board.Width), Random.Range(0, Board.Height))
-            };
+                return new HashSet<Vector2Int>();
+            }
+
+            HashSet<Vector2Int> cluster = new HashSet<Vector2Int> { startCell.Value };
 
             int safetyLimit = targetCount * 30;
 
@@ -83,13 +101,39 @@ namespace BlockBrawl.Grid
                 Vector2Int direction = ClusterDirections[Random.Range(0, ClusterDirections.Length)];
                 Vector2Int candidate = fromCell + direction;
 
-                if (candidate.x >= 0 && candidate.x < Board.Width && candidate.y >= 0 && candidate.y < Board.Height)
+                bool insideBoard = candidate.x >= 0 && candidate.x < Board.Width && candidate.y >= 0 && candidate.y < Board.Height;
+                bool cellAvailable = insideBoard && (!onlyEmptyCells || !board.IsCellOccupied(candidate.x, candidate.y));
+
+                if (cellAvailable)
                 {
                     cluster.Add(candidate);
                 }
             }
 
             return cluster;
+        }
+
+        private Vector2Int? FindRandomEmptyCell()
+        {
+            List<Vector2Int> emptyCells = new List<Vector2Int>();
+
+            for (int y = 0; y < Board.Height; y++)
+            {
+                for (int x = 0; x < Board.Width; x++)
+                {
+                    if (!board.IsCellOccupied(x, y))
+                    {
+                        emptyCells.Add(new Vector2Int(x, y));
+                    }
+                }
+            }
+
+            if (emptyCells.Count == 0)
+            {
+                return null;
+            }
+
+            return emptyCells[Random.Range(0, emptyCells.Count)];
         }
 
         public bool PlaceShapeBlocks(IEnumerable<Vector2Int> relativeCells, int originX, int originY, bool countsForScore = true)

@@ -88,6 +88,11 @@ namespace BlockBrawl.Pieces
             return slotPieceObjects[slotIndex];
         }
 
+        public void RecheckGameOver()
+        {
+            CheckGameOver();
+        }
+
         public void ForceReplaceSlot(int slotIndex)
         {
             if (slotEmpty[slotIndex])
