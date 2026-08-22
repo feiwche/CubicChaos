@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -11,10 +12,15 @@ namespace CubicChaos.Samata
 
         [SerializeField] private ChaosMeter chaosMeter;
         [SerializeField] private TMP_Text phaseText;
+        [SerializeField] private Transform bannerRoot;
+        [SerializeField] private TMP_Text bannerText;
+
+        private bool isFirstUpdate = true;
 
         private void OnEnable()
         {
             chaosMeter.PhaseChanged += UpdatePhaseText;
+            isFirstUpdate = true;
             UpdatePhaseText(chaosMeter.CurrentPhase);
         }
 
@@ -32,6 +38,33 @@ namespace CubicChaos.Samata
                 ChaosPhase.Kaos => KaosColor,
                 _ => SakinColor
             };
+
+            if (!isFirstUpdate)
+            {
+                ShowBanner(phase);
+            }
+
+            isFirstUpdate = false;
+        }
+
+        private void ShowBanner(ChaosPhase phase)
+        {
+            if (bannerRoot == null || bannerText == null || phase == ChaosPhase.Sakin)
+            {
+                return;
+            }
+
+            bannerText.text = phase == ChaosPhase.Kaos ? "KAOS BAŞLADI!" : "ORTA FAZ!";
+            bannerText.color = phase == ChaosPhase.Kaos ? KaosColor : OrtaColor;
+
+            bannerRoot.gameObject.SetActive(true);
+            bannerRoot.localScale = Vector3.zero;
+
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(bannerRoot.DOScale(1f, 0.3f).SetEase(Ease.OutBack));
+            sequence.AppendInterval(1f);
+            sequence.Append(bannerRoot.DOScale(0f, 0.2f).SetEase(Ease.InBack));
+            sequence.OnComplete(() => bannerRoot.gameObject.SetActive(false));
         }
     }
 }

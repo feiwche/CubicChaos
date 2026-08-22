@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 using CubicChaos.Core;
@@ -27,6 +28,11 @@ namespace CubicChaos.UI
             scoreText.text = $"Skor: {score}";
             HighScoreManager.TrySetBest(modeKey, score);
             bestText.text = $"Rekor: {HighScoreManager.GetBest(modeKey)}";
+
+            if (scoreManager.ComboCount >= 2)
+            {
+                scoreText.transform.DOPunchScale(Vector3.one * 0.15f, 0.25f, 4, 0.5f);
+            }
         }
     }
 }

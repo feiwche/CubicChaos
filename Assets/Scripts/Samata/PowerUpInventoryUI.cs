@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,10 @@ namespace CubicChaos.Samata
         [SerializeField] private TMP_Text dondurmaBadge;
         [SerializeField] private TMP_Text karistirmaBadge;
         [SerializeField] private TMP_Text ciftPuanBadge;
+        [SerializeField] private Transform bombaButton;
+        [SerializeField] private Transform dondurmaButton;
+        [SerializeField] private Transform karistirmaButton;
+        [SerializeField] private Transform ciftPuanButton;
 
         private void OnEnable()
         {
@@ -25,6 +30,21 @@ namespace CubicChaos.Samata
         private void HandleInventoryChanged(PowerUpType type, int count)
         {
             RefreshBadges();
+            PlayPickupAnimation(type);
+        }
+
+        private void PlayPickupAnimation(PowerUpType type)
+        {
+            Transform target = type switch
+            {
+                PowerUpType.Bomba => bombaButton,
+                PowerUpType.Dondurma => dondurmaButton,
+                PowerUpType.Karistirma => karistirmaButton,
+                PowerUpType.CiftPuan => ciftPuanButton,
+                _ => null
+            };
+
+            target?.DOPunchScale(Vector3.one * 0.35f, 0.4f, 6, 0.5f);
         }
 
         private void RefreshBadges()

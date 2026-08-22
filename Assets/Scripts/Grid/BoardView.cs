@@ -20,7 +20,13 @@ namespace CubicChaos.Grid
         [SerializeField] private int denseMaxCells = 13;
         [SerializeField] private float clearStaggerStep = 0.025f;
 
+        private static readonly Color ValidPreviewColor = new Color(0.4f, 0.9f, 0.5f, 0.65f);
+        private static readonly Color InvalidPreviewColor = new Color(0.9f, 0.3f, 0.3f, 0.65f);
+
         private readonly GameObject[,] blockVisuals = new GameObject[Board.Width, Board.Height];
+        private readonly GameObject[,] cellVisuals = new GameObject[Board.Width, Board.Height];
+        private readonly Color[,] baseCellColors = new Color[Board.Width, Board.Height];
+        private readonly List<Vector2Int> activePreviewCells = new List<Vector2Int>();
 
         private Board board;
 
@@ -40,9 +46,62 @@ namespace CubicChaos.Grid
                 for (int x = 0; x < Board.Width; x++)
                 {
                     Vector3 worldPosition = GridToWorldPosition(x, y);
-                    Instantiate(cellPrefab, worldPosition, Quaternion.identity, transform);
+                    GameObject cellObject = Instantiate(cellPrefab, worldPosition, Quaternion.identity, transform);
+                    cellVisuals[x, y] = cellObject;
+
+                    SpriteRenderer renderer = cellObject.GetComponent<SpriteRenderer>();
+                    if (renderer != null)
+                    {
+                        baseCellColors[x, y] = renderer.color;
+                    }
                 }
             }
+        }
+
+        public void ShowPlacementPreview(IEnumerable<Vector2Int> relativeCells, int originX, int originY, bool valid)
+        {
+            ClearPlacementPreview();
+            Color previewColor = valid ? ValidPreviewColor : InvalidPreviewColor;
+
+            foreach (Vector2Int cell in relativeCells)
+            {
+                int x = originX + cell.x;
+                int y = originY + cell.y;
+
+                if (!board.IsInsideBoard(x, y) || cellVisuals[x, y] == null)
+                {
+                    continue;
+                }
+
+                SpriteRenderer renderer = cellVisuals[x, y].GetComponent<SpriteRenderer>();
+                if (renderer == null)
+                {
+                    continue;
+                }
+
+                renderer.color = previewColor;
+                activePreviewCells.Add(new Vector2Int(x, y));
+            }
+        }
+
+        public void ClearPlacementPreview()
+        {
+            foreach (Vector2Int cell in activePreviewCells)
+            {
+                GameObject cellObject = cellVisuals[cell.x, cell.y];
+                if (cellObject == null)
+                {
+                    continue;
+                }
+
+                SpriteRenderer renderer = cellObject.GetComponent<SpriteRenderer>();
+                if (renderer != null)
+                {
+                    renderer.color = baseCellColors[cell.x, cell.y];
+                }
+            }
+
+            activePreviewCells.Clear();
         }
 
         private void SeedRandomBlocks()

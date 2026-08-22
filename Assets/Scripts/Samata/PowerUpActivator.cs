@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -55,6 +56,7 @@ namespace CubicChaos.Samata
                 {
                     boardView.DestroyCellAt(gridPosition.x, gridPosition.y);
                     waitingForBombTarget = false;
+                    ShakeCamera();
                 }
             }
         }
@@ -88,6 +90,14 @@ namespace CubicChaos.Samata
             if (inventory.TrySpend(PowerUpType.CiftPuan))
             {
                 scoreManager.ActivateDoubleScore(ciftPuanDuration);
+            }
+        }
+
+        private void ShakeCamera()
+        {
+            if (Camera.main != null)
+            {
+                Camera.main.transform.DOShakePosition(0.3f, 0.3f, 14, 90, false, true);
             }
         }
 

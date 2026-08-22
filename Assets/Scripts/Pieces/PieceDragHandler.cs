@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using CubicChaos.Grid;
@@ -69,11 +70,21 @@ namespace CubicChaos.Pieces
         private void FollowPointer()
         {
             transform.position = GetPointerWorldPosition();
+            UpdatePlacementPreview();
+        }
+
+        private void UpdatePlacementPreview()
+        {
+            Vector3 shapeOriginWorldPosition = pieceView.GetShapeOriginWorldPosition();
+            Vector2Int gridOrigin = boardView.WorldToGridPosition(shapeOriginWorldPosition);
+            bool canPlace = boardView.Board.CanPlaceCells(pieceView.Shape.cells, gridOrigin.x, gridOrigin.y);
+            boardView.ShowPlacementPreview(pieceView.Shape.cells, gridOrigin.x, gridOrigin.y, canPlace);
         }
 
         private void EndDrag()
         {
             isDragging = false;
+            boardView.ClearPlacementPreview();
 
             Vector3 shapeOriginWorldPosition = pieceView.GetShapeOriginWorldPosition();
             Vector2Int gridOrigin = boardView.WorldToGridPosition(shapeOriginWorldPosition);
@@ -93,8 +104,15 @@ namespace CubicChaos.Pieces
 
         private void ReturnToTray()
         {
-            transform.position = traySlotPosition;
-            transform.localScale = traySlotScale;
+            foreach (SpriteRenderer cellRenderer in GetComponentsInChildren<SpriteRenderer>())
+            {
+                cellRenderer.DOColor(Color.red, 0.08f).SetLoops(2, LoopType.Yoyo);
+            }
+
+            Sequence rejectSequence = DOTween.Sequence();
+            rejectSequence.Append(transform.DOShakePosition(0.2f, 0.25f, 20, 90, false, true));
+            rejectSequence.Append(transform.DOMove(traySlotPosition, 0.15f));
+            rejectSequence.Join(transform.DOScale(traySlotScale, 0.15f));
         }
 
         private Vector3 GetPointerWorldPosition()

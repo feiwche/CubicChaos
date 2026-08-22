@@ -1583,6 +1583,83 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   chaosMeter: {fileID: 600000003}
   phaseText: {fileID: 600000013}
+  bannerRoot: {fileID: 860000002}
+  bannerText: {fileID: 860000004}
+--- !u!1 &860000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 860000002}
+  - component: {fileID: 860000003}
+  - component: {fileID: 860000004}
+  m_Layer: 5
+  m_Name: PhaseBanner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &860000002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860000001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 950000002}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.42}
+  m_AnchorMax: {x: 1, y: 0.58}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &860000003
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860000001}
+  m_CullTransparentMesh: 1
+--- !u!114 &860000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_Maskable: 1
+  m_text: "ORTA FAZ!"
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontSize: 72
+  m_fontSizeBase: 72
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_enableWordWrapping: 1
+  m_isRichText: 1
+  m_isOrthographic: 1
 --- !u!1 &700000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,6 +1908,10 @@ MonoBehaviour:
   dondurmaBadge: {fileID: 781000023}
   karistirmaBadge: {fileID: 782000023}
   ciftPuanBadge: {fileID: 783000023}
+  bombaButton: {fileID: 780000002}
+  dondurmaButton: {fileID: 781000002}
+  karistirmaButton: {fileID: 782000002}
+  ciftPuanButton: {fileID: 783000002}
 --- !u!1 &780000001
 GameObject:
   m_ObjectHideFlags: 0
@@ -3268,3 +3349,4 @@ SceneRoots:
   - {fileID: 790000002}
   - {fileID: 795000002}
   - {fileID: 850000002}
+  - {fileID: 860000002}
