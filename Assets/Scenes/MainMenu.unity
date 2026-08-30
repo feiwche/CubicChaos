@@ -439,7 +439,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: Cubic Chaos
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -631,7 +631,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: Normal Mod
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: Şamata Modu
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2

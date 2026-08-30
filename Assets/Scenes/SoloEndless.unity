@@ -663,6 +663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   gameOverPanel: {fileID: 950000020}
   restartButton: {fileID: 950000044}
+  coinRewardText: {fileID: 960000004}
 --- !u!1 &950000010
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,7 +727,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: 'Skor: 0'
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -817,7 +818,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: 'Rekor: 0'
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -862,6 +863,7 @@ RectTransform:
   m_Children:
   - {fileID: 950000031}
   - {fileID: 950000041}
+  - {fileID: 960000002}
   m_Father: {fileID: 950000002}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -965,7 +967,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: Oyun Bitti
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -973,6 +975,81 @@ MonoBehaviour:
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_fontSize: 90
   m_fontSizeBase: 90
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_enableWordWrapping: 1
+  m_isRichText: 1
+  m_isOrthographic: 1
+--- !u!1 &960000001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 960000002}
+  - component: {fileID: 960000003}
+  - component: {fileID: 960000004}
+  m_Layer: 5
+  m_Name: CoinRewardText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &960000002
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 950000021}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 30}
+  m_SizeDelta: {x: 400, y: 70}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &960000003
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_CullTransparentMesh: 1
+--- !u!114 &960000004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960000001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_text: +0
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
+  m_fontSharedMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4290954234
+  m_fontColor: {r: 0.9490196, g: 0.79607844, b: 0.24705882, a: 1}
+  m_fontSize: 54
+  m_fontSizeBase: 54
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_enableWordWrapping: 1
@@ -1157,7 +1234,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: Tekrar Oyna
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2
@@ -1364,7 +1441,7 @@ MonoBehaviour:
   m_RaycastTarget: 1
   m_Maskable: 1
   m_text: "< Menu"
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 18d10c5c7e1eccc44bcd8dfc300c208c, type: 2}
   m_fontSharedMaterials: []
   m_fontColor32:
     serializedVersion: 2

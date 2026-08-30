@@ -234,7 +234,7 @@ namespace CubicChaos.Pieces
                 }
             }
 
-            gameOverUI.Show();
+            gameOverUI.Show(scoreManager.Score);
         }
 
         private Vector3 GetSlotPosition(int slotIndex)
