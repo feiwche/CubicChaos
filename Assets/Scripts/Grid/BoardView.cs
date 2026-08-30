@@ -9,6 +9,7 @@ namespace CubicChaos.Grid
         [SerializeField] private GameObject cellPrefab;
         [SerializeField] private GameObject blockCellPrefab;
         [SerializeField] private ScoreManager scoreManager;
+        [SerializeField] private BlockSkinDefinition[] skins;
         [SerializeField] private float cellSize = 1f;
         [SerializeField] private Vector3 boardOrigin = Vector3.zero;
 
@@ -29,14 +30,36 @@ namespace CubicChaos.Grid
         private readonly List<Vector2Int> activePreviewCells = new List<Vector2Int>();
 
         private Board board;
+        private BlockSkinDefinition activeSkin;
 
         public Board Board => board;
 
         private void Awake()
         {
+            activeSkin = ResolveActiveSkin();
             board = new Board();
             SpawnCells();
             SeedRandomBlocks();
+        }
+
+        private BlockSkinDefinition ResolveActiveSkin()
+        {
+            if (skins == null || skins.Length == 0)
+            {
+                return null;
+            }
+
+            string selectedId = SkinManager.SelectedSkinId;
+
+            foreach (BlockSkinDefinition skin in skins)
+            {
+                if (skin != null && skin.skinId == selectedId)
+                {
+                    return skin;
+                }
+            }
+
+            return skins[0];
         }
 
         private void SpawnCells()
@@ -52,6 +75,11 @@ namespace CubicChaos.Grid
                     SpriteRenderer renderer = cellObject.GetComponent<SpriteRenderer>();
                     if (renderer != null)
                     {
+                        if (activeSkin != null)
+                        {
+                            renderer.color = activeSkin.emptyCellColor;
+                        }
+
                         baseCellColors[x, y] = renderer.color;
                     }
                 }
@@ -207,6 +235,15 @@ namespace CubicChaos.Grid
                 int y = originY + cell.y;
                 Vector3 worldPosition = GridToWorldPosition(x, y);
                 blockVisuals[x, y] = Instantiate(blockCellPrefab, worldPosition, Quaternion.identity, transform);
+
+                if (activeSkin != null)
+                {
+                    SpriteRenderer blockRenderer = blockVisuals[x, y].GetComponent<SpriteRenderer>();
+                    if (blockRenderer != null)
+                    {
+                        blockRenderer.color = activeSkin.blockCellColor;
+                    }
+                }
             }
 
             if (countsForScore && scoreManager != null)
