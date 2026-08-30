@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Color: {r: 0.184, g: 0.788, b: 0.753, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 859a34c8d7d1f15458953f9b89711a39, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -707,8 +707,8 @@ MonoBehaviour:
   m_Color: {r: 0.91, g: 0.639, b: 0.239, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 859a34c8d7d1f15458953f9b89711a39, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
