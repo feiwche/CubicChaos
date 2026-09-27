@@ -38,6 +38,7 @@ namespace CubicChaos.Samata
 
         private void InjectBlocks()
         {
+            CubicChaos.Core.AudioManager.BlocksInjected();
             boardView.InjectRandomBlocks(GetCurrentBlockCount());
             pieceTray.RecheckGameOver();
         }

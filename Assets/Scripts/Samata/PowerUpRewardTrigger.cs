@@ -58,6 +58,7 @@ namespace CubicChaos.Samata
         private void GrantRandomPowerUp()
         {
             inventory.Add(inventory.GetRandomType());
+            AudioManager.PowerUpEarned();
         }
     }
 }

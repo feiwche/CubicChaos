@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using CubicChaos.UI;
 
 namespace CubicChaos.Core
 {
@@ -19,12 +19,14 @@ namespace CubicChaos.Core
 
         private void LoadNormalMode()
         {
-            SceneManager.LoadScene(normalModeSceneName);
+            AudioManager.ButtonClick();
+            SceneTransitionFade.Load(normalModeSceneName);
         }
 
         private void LoadSamataMode()
         {
-            SceneManager.LoadScene(samataModeSceneName);
+            AudioManager.ButtonClick();
+            SceneTransitionFade.Load(samataModeSceneName);
         }
     }
 }

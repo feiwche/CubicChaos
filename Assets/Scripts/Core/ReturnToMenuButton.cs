@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using CubicChaos.UI;
 
 namespace CubicChaos.Core
 {
@@ -16,7 +16,8 @@ namespace CubicChaos.Core
 
         private void ReturnToMenu()
         {
-            SceneManager.LoadScene(mainMenuSceneName);
+            AudioManager.ButtonClick();
+            SceneTransitionFade.Load(mainMenuSceneName);
         }
     }
 }

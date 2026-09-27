@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50c8256f0d76e27d727c532c5c649dd7, type: 3}
+  m_Name: Ates
+  m_EditorClassIdentifier:
+  skinId: ates
+  displayName: Ateş
+  coinCost: 400
+  emptyCellColor: {r: 0.259, g: 0.153, b: 0.169, a: 1}
+  blockCellColor: {r: 0.949, g: 0.404, b: 0.290, a: 1}

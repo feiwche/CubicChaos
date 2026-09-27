@@ -54,6 +54,8 @@ namespace CubicChaos.Samata
                 return;
             }
 
+            CubicChaos.Core.AudioManager.PhaseChanged();
+
             bannerText.text = phase == ChaosPhase.Kaos ? "KAOS BAŞLADI!" : "ORTA FAZ!";
             bannerText.color = phase == ChaosPhase.Kaos ? KaosColor : OrtaColor;
 

@@ -290,6 +290,15 @@ namespace CubicChaos.Grid
                 if (clearedAnyLine)
                 {
                     scoreManager.AddClearedCells(clearedCellCount);
+
+                    if (scoreManager.ComboCount >= 2)
+                    {
+                        AudioManager.ComboClear();
+                    }
+                    else
+                    {
+                        AudioManager.LineCleared();
+                    }
                 }
                 else
                 {

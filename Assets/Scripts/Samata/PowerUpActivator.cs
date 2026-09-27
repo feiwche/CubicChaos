@@ -66,6 +66,7 @@ namespace CubicChaos.Samata
             if (inventory.TrySpend(PowerUpType.Bomba))
             {
                 waitingForBombTarget = true;
+                AudioManager.PowerUpUsed();
             }
         }
 
@@ -74,6 +75,7 @@ namespace CubicChaos.Samata
             if (inventory.TrySpend(PowerUpType.Dondurma))
             {
                 chaosMeter.Freeze(dondurmaDuration);
+                AudioManager.PowerUpUsed();
             }
         }
 
@@ -82,6 +84,7 @@ namespace CubicChaos.Samata
             if (inventory.TrySpend(PowerUpType.Karistirma))
             {
                 pieceTray.ForceRefillAll();
+                AudioManager.PowerUpUsed();
             }
         }
 
@@ -90,6 +93,7 @@ namespace CubicChaos.Samata
             if (inventory.TrySpend(PowerUpType.CiftPuan))
             {
                 scoreManager.ActivateDoubleScore(ciftPuanDuration);
+                AudioManager.PowerUpUsed();
             }
         }
 

@@ -92,12 +92,14 @@ namespace CubicChaos.Pieces
 
             if (canPlace)
             {
+                CubicChaos.Core.AudioManager.PiecePlaced();
                 boardView.PlaceShapeBlocks(pieceView.Shape.cells, gridOrigin.x, gridOrigin.y);
                 Destroy(gameObject);
                 tray.NotifyPieceUsed(slotIndex);
             }
             else
             {
+                CubicChaos.Core.AudioManager.InvalidPlacement();
                 ReturnToTray();
             }
         }

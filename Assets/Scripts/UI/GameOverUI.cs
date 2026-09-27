@@ -22,6 +22,7 @@ namespace CubicChaos.UI
         public void Show(int finalScore)
         {
             gameOverPanel.SetActive(true);
+            AudioManager.GameOver();
             AwardCoins(finalScore);
         }
 
@@ -46,8 +47,9 @@ namespace CubicChaos.UI
 
         private void Restart()
         {
+            AudioManager.ButtonClick();
             Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
+            SceneTransitionFade.Load(currentScene.name);
         }
     }
 }

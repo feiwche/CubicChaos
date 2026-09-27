@@ -25,12 +25,14 @@ namespace CubicChaos.Samata
             if (phase == ChaosPhase.Orta)
             {
                 inventory.Add(inventory.GetRandomType());
+                AudioManager.PowerUpEarned();
             }
             else if (phase == ChaosPhase.Kaos)
             {
                 inventory.Add(inventory.GetRandomType());
                 inventory.Add(inventory.GetRandomType());
                 scoreManager.ActivateDoubleScore(kaosDoubleScoreDuration);
+                AudioManager.PowerUpEarned();
             }
         }
     }
