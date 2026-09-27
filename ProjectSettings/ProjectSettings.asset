@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: İrem Kervan
   productName: Cubic Chaos
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -170,7 +170,8 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.2D-URP
+    Standalone: com.iremkervan.cubicchaos
+    Android: com.iremkervan.cubicchaos
   buildNumber:
     Standalone: 0
     VisionOS: 0
